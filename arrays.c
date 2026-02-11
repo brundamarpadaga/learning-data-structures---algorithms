@@ -13,6 +13,13 @@ array_t* createArray( int size ){
     return newArray;
 }
 
+void printArray( array_t* arr){
+    for ( int i = 0; i < arr->size; i++){
+        printf("%d ", arr->data[i]);
+    }
+    printf("\n");
+}
+
 
 int main(){
 
@@ -23,11 +30,12 @@ int main(){
     for ( int i=0; i< my_array->size;i++){
         my_array->data[i] = i;
         my_array2->data[i] = i*2;
-        printf("%d ", my_array->data[i]);
-        printf("%d ", my_array2->data[i]);
+        
     }
-    printf("my_array2 data at index 6: %d\n", my_array2->data[6]); 
-    printf("address: %p\n", my_array->data + 10);
+    printArray(my_array);
+    printArray(my_array2);
+    printf("my_array2 data at index 5: %d\n", my_array2->data[5]); // this is out of bounds access, but we are just demonstrating pointer arithmetic here
+    printf("address: %p\n", my_array2->data + 5); // this is out of bounds access, but we are just demonstrating pointer arithmetic here
 
     
     free(my_array->data);
