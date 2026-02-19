@@ -40,7 +40,7 @@ void main(){
     for ( int i = 0; i < rows; i++){
         for ( int j = 0; j < cols; j++){
             matrix[i][j] = temp++; // initializing the 2D array with some values
-            matrix2[i*cols + j] = temp; // initializing the dynamic 2D array using pointer arithmetic
+            matrix2[i*cols + j] = matrix[i][j]; // initializing the dynamic 2D array using pointer arithmetic
         }
     }
 
