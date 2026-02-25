@@ -20,7 +20,7 @@ struct packet  {
     uint8_t ID; // 1 byte
     uint32_t timestamp; // 4 bytes
     uint16_t value; //2 bytes
-}__attribute__((packed));
+}__attribute__((packed)); // telling the compiler not to insert padding bytes
 
 int main(){
 
@@ -37,8 +37,8 @@ int main(){
     printf( "Size: %zu \n", sizeof(person1)); // 4+30+4 ( 2 bytes for padding)
     printf("offset of age: %zu \n", offsetof(details_t, age));
 
-    printf("Vaue of controlReg: %d \n", controlReg1);
-    printf("size of controlreg1 : %zu \n",sizeof(controlReg1));
+    printf("Vaue of controlReg: %d \n", *(uint16_t*)&controlReg1);
+    printf("size of controlreg1 : %zu \n",sizeof(controlReg1)); // 
 
     printf("size of packet1 : %zu \n",sizeof(packet1)); // size = 12 if __attribute__((packed)) not used 
     
