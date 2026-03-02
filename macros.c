@@ -22,13 +22,17 @@
 #define checkIfOdd(x) x & 0x01 // check if a number is odd (returns non zero if odd)
 
 #define checkIfOpSigns(reg1,reg2) ((reg1 >> 15 & 0x01) ^ ((reg2>>15)&0x01)) // non-zero if registers have opposite signs
+#define swapBytes(x) x = (x << 8) | (x >> 8) // swap bytes of a 16 bit register
+
+#define extractBits(x,m,n) ( x >> m ) & ( (0x01 << n)-1 )
+
 
 
 
 int main(){
 
     uint16_t register1 ;
-    int16_t register2 = 96;
+    int16_t register2 = -96;
 
     register1 = 0x0000;
 
@@ -75,6 +79,12 @@ int main(){
     printf("Check if reg1 and reg2 have opposite signs: %s %x \n", checkIfOpSigns(register1,register2)?"Yes":"No", checkIfOpSigns(register1,register2));
 
 
+    printf("Before swapping bytes : 0x%x \n", register1);
+    swapBytes(register1);
+    printf("After swapping bytes : 0x%x \n", register1);
+
+    register1 = 0x04C5;
+    printf("Extract 4 bits at position 4: 0x%x \n", extractBits(register1,4,4));
     
 
     return 0;
