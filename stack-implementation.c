@@ -86,5 +86,15 @@ int main(){
 
     s1->ptrPrint(s1->self);
 
+    s1->popPtr(s1->self);
+    s1->popPtr(s1->self);
+    s1->popPtr(s1->self);
+    s1->popPtr(s1->self);
+    s1->popPtr(s1->self);
+    s1->popPtr(s1->self); // this will cause stack underflow
+
+
+    s1->ptrPrint(s1->self);
+
     return 0;
 }
