@@ -15,6 +15,8 @@ Node_t* createNode(int data);
 LinkedList_t* createEmptyList();
 LinkedList_t* insertAtHead( LinkedList_t* list, int data);
 void insertAtTail( LinkedList_t* list, int data);
+void deleteList(LinkedList_t* list);
+void deleteNodeAtHead(LinkedList_t* list);
 
 
 #endif // LINKEDLIST_H

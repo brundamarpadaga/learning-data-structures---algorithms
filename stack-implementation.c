@@ -13,11 +13,22 @@ typedef struct Stack{
     void (*pushPtr)(struct Stack*, int);
     int (*popPtr) (struct Stack*);
     void (*ptrPrint)(struct Stack*);
+    int (*getSizePtr)(struct Stack*);
+    int (*isEmptyPtr)(struct Stack*);
+    int (*isFullPtr)(struct Stack*);
+    int (*peekPtr)(struct Stack*);
+    void (*deletePtr)(struct Stack*);
 }Stack_t;
 
 void push(Stack_t* stack, int data);
 int pop(Stack_t* stack);
 void print(Stack_t* stack);
+int getSize(Stack_t* stack);
+int isEmpty(Stack_t* stack);
+int isFull(Stack_t* stack);
+int peek(Stack_t* stack);
+void delete(Stack_t* stack);
+
 
 struct Stack* newStack(int size){
 
@@ -57,6 +68,22 @@ int pop(Stack_t* stack){
     return topData;
 }
 
+int getSize(Stack_t* stack){
+    return stack->size;
+}
+
+int peek(Stack_t* stack){
+    return *stack->top;
+}
+
+int isEmpty(Stack_t* stack){
+    return stack->top == stack->stackArray+(stack->size); // stack is empty if top points to the end of the array
+}
+
+int isFull(Stack_t* stack){
+    return stack->top == stack->stackArray; // stack is full if top points to the beginning of the array
+}
+
 void print(Stack_t* stack){
     printf("TOP -> ");
     int* temp = stack->top;
@@ -85,6 +112,12 @@ int main(){
     s1->pushPtr(s1->self, 1);
 
     s1->ptrPrint(s1->self);
+    printf("\n");
+
+    printf("Stack size: %d \n", s1->getSizePtr(s1->self));
+    printf("Stack is empty: %s \n", s1->isEmptyPtr(s1->self) ? "Yes" : "No");
+    printf("Stack is full: %s \n", s1->isFullPtr(s1->self) ? "Yes" : "No");
+    printf("Stack top: %d \n", s1->peekPtr(s1->self));
 
     s1->popPtr(s1->self);
     s1->popPtr(s1->self);
@@ -92,6 +125,7 @@ int main(){
     s1->popPtr(s1->self);
     s1->popPtr(s1->self);
     s1->popPtr(s1->self); // this will cause stack underflow
+
 
 
     s1->ptrPrint(s1->self);
