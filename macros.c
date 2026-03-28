@@ -78,7 +78,6 @@ int main(){
     printf("register2 = 0x%x \n", register2);
     printf("Check if reg1 and reg2 have opposite signs: %s %x \n", checkIfOpSigns(register1,register2)?"Yes":"No", checkIfOpSigns(register1,register2));
 
-
     printf("Before swapping bytes : 0x%x \n", register1);
     swapBytes(register1);
     printf("After swapping bytes : 0x%x \n", register1);

@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+typedef int (*operation_t)(int, int); // Define a function pointer type for operations that take two integers and return an integer
 
 int arithmetic(int(*ptr)(int, int), int a, int b);
 
@@ -12,10 +13,12 @@ int divOp(int a , int b);
 
 int main(int argc, char** argv){
 
-    int (*ptrAdd) (int, int);
-    int (*ptrSub) (int, int);
-    int (*ptrMul) (int, int);
-    int (*ptrDiv) (int, int);
+    operation_t ptrAdd, ptrSub, ptrMul, ptrDiv;
+
+    //int (*addPtr)(int, int) = add; // Initialize function pointer for addition
+    //int (*subPtr)(int, int) = sub; // Initialize function pointer for subtraction
+    //int (*mulPtr)(int, int) = mul; // Initialize function pointer for multiplication
+    //int (*divPtr)(int, int) = divOp; // Initialize function pointer for
 
     printf("argc = %d\n", argc);
     printf("argv = %s\n", argv[0]);

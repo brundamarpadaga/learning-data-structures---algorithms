@@ -27,16 +27,23 @@ int main(){
 
     memset(charArray, 65 , sizeof(array)-1); // set the allocated memory to 0
     printf("%s\n", charArray); // print charArray as a string, it may not be null-terminated
+    char src[20] ;
+    for (int i = 0; i < sizeof(src)-1; i++){
+        src[i] = 65 + i; // fill src with characters from 'A' to 'T'
+    }
+    src[sizeof(src)-1] = '\0'; // null-terminate the string
+    printf("src: %s\n", src); // print src as a string, it may not be null-terminated
     char dst[20]; // array of 20 characters
     memset(dst, 0 , sizeof(dst)); // set the allocated memory to 0
-    memcpy(dst, charArray, 13); // copy 20 bytes from charArray to dst
-    for(int i = 0; i < sizeof(dst); i++){
-        printf("dst[%d]: %c \n", i , (unsigned char)dst[i]);
-    }
-    printf("\n");
+    memcpy(dst, charArray, 13); // copy 13 bytes from charArray to dst
+    memset(dst+13, 66 , 6); // set the remaining bytes to 66
+    //dst[19] = '\0'; // null-terminate the string
+    
     
     printf("dst as string: %s\n", dst); // print dst as a string, it may not be null-terminated
 
-
-    return 0;
+    memcpy(dst+15, src, 15); // copy 20 bytes from src to dst, src overlaps with dst, it may not be null-terminated
+    printf("dst after memcpy from src without null-termination: %s\n", dst); // print dst as a string, it may not be null-terminated
+    free(charArray); // free the allocated memory for charArray
+    return 0; 
 }
