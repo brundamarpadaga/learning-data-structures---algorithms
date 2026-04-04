@@ -17,6 +17,7 @@ LinkedList_t* insertAtHead( LinkedList_t* list, int data);
 void insertAtTail( LinkedList_t* list, int data);
 void deleteList(LinkedList_t* list);
 void deleteNodeAtHead(LinkedList_t* list);
+void reverseLinkedList(LinkedList_t* );
 
 
 #endif // LINKEDLIST_H

@@ -9,12 +9,15 @@ int main(){
     insertAtHead(list, 30);
 
     printLinkedList(list);
+    reverseLinkedList(list);
+    printLinkedList(list);
     insertAtTail(list, 40);
     insertAtTail(list, 50);
     insertAtTail(list, 60);
     printLinkedList(list);
     deleteNodeAtHead(list);
     printLinkedList(list);
+    
     deleteList(list);
 
     return 0;
@@ -78,4 +81,17 @@ void deleteNodeAtHead(LinkedList_t* list){
     Node_t* head = temp->next;
     list->head = head;
     free(temp);
+}
+void reverseLinkedList(LinkedList_t* list){
+
+    Node_t *current = list->head;
+    Node_t *prev = NULL;
+    while(current!=NULL){
+        Node_t* next = current->next;
+        current->next = prev;
+        prev = current;
+        list->head = current;
+        current = next;
+        
+    }  
 }

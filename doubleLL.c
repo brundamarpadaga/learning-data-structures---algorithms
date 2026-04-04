@@ -64,6 +64,7 @@ void printReverse(LinkedList_t* list){
         printf("%d -> ", iter->data);
         iter = iter->prev;
     }
+    printf("\n");
 }
 
 
@@ -78,15 +79,23 @@ void reverseLinkedList(LinkedList_t* list){
     while(iter->next!=NULL){
         iter = iter->next;
     }
-    // iter is the tail of the linkedList
-
+    // iter is now the tail of the linkedList
+    printf(" reverse linked list function: %d \n", iter->data);
     //Node_t* tail = iter;
     list->head = iter;
+    // essentially interchanging prev and next pointers but using a teporary node to store intermediatary node so its not overwritten during the interchange
     while(iter!=NULL){
+        /* Node_t* temp = iter->next;
+        iter->next = iter->prev;
+        iter->prev = temp;
+        iter = iter->next; */
+        // Another way to do it :)
         Node_t* temp = iter->prev;
+        iter->prev = iter->next;
         iter->next = temp;
-        iter->prev = temp->next->next;
+        iter= iter->next;  
     }
+    
 
 }
 
@@ -98,7 +107,7 @@ int main(){
     }
     printLinkedList(list1);
     printReverse(list1);
-    //reverseLinkedList(list1);
+    reverseLinkedList(list1);
     printLinkedList(list1);
     return 0;
 }
