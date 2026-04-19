@@ -14,9 +14,9 @@ class UDT{
 };
 
 int main(){
-    UDT udt(100); // create a unique_ptr to a UDT object with value 100
-    std::unique_ptr<UDT> ptrUDT; // create a unique_ptr 
-    ptrUDT = std::unique_ptr<UDT>(new UDT(200)); // assign a new UDT object to ptrUDT, the old UDT object will be destroyed when ptrUDT is assigned a new value
+    UDT udt(100); // create a UDT object with value 100
+    std::unique_ptr<UDT> ptrUDT; // create a unique_ptr to UDT, initially null
+    ptrUDT = std::unique_ptr<UDT>(new UDT(200)); // assign a new UDT object to ptrUDT with value 200
     std::unique_ptr<int> ptr1(new int(42)); // create a unique_ptr to an integer with value 42
 
     std::cout << "Value at ptr1: " << *ptr1 << std::endl; // dereference ptr1 to get the value
