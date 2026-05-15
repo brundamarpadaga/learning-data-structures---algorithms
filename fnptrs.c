@@ -3,7 +3,7 @@
 
 typedef int (*operation_t)(int, int); // Define a function pointer type for operations that take two integers and return an integer
 
-int arithmetic(int(*ptr)(int, int), int a, int b);
+int arithmetic(int(*ptr)(int, int), int a, int b); // int arithmetic (operation_t ptr, int a, int b) is also valid
 
 int add(int a,int b);
 int sub(int a,int b);
@@ -25,6 +25,9 @@ int main(int argc, char** argv){
     for(int i=1;i<argc;i++){
         printf("%s\n", argv[i]);
     }
+
+   
+
     int operand1 = atoi(argv[1]);
     int operand2 = atoi(argv[3]);
     char operator = argv[2][0];
@@ -48,7 +51,7 @@ int main(int argc, char** argv){
             result = arithmetic(ptrDiv, operand1, operand2);
             break;
         default:
-            printf("Invalid operator\n");
+            printf("Invalid operator: %c\n", operator);
             return 1;
     }
 
@@ -75,5 +78,5 @@ int divOp(int a , int b){
     return a/b;
 }
 int arithmetic(int(*ptr)(int, int), int a, int b){
-    (*ptr)(a,b);
+    return (*ptr)(a,b);
 }
