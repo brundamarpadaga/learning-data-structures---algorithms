@@ -6,7 +6,7 @@ void print2dArrayByPointer( int* arr, int rows, int cols){
     printf("Printing 2D array using pointer arithmetic:\n");
     for(int i = 0; i<rows;i++){
         for(int j =0; j < cols ;j++){
-            printf("%d ",arr[i*cols+j]);
+            printf("%d ",*(arr+(i*cols+j))); // pointer arithmetic to access elements of 2D array
         }
         printf("\n");
     }
