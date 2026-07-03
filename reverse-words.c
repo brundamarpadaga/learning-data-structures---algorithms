@@ -21,21 +21,17 @@ void reverseString(char* string){
 // Function to reverse the words in a string
 void reverseWords(char* string){
     reverseString(string);
-    char* wordIter = *(string) ; // get the start of the word and attach a /0 when space is found
-    char* start = string;
-    while( *string!= '\0'){
+    char* charIter = string ; // this points to the current character in the string
+    char* start = string; // get the start of the word and attach a /0 when space is found
+    while( *charIter!= '\0'){
         
-        if( *(string) == ' '){
-            *wordIter = '/0';
+        if( *charIter == ' ' ){
+            *charIter = '\0'; // terminate the word
             reverseString(start);
-            start = ++string;
-
-        }
-        else{
-            *wordIter = *string;
-            wordIter++;
-            string++;
-        }
+            *charIter = ' '; // put back the space
+            start = charIter + 1; // set the start to the next word
+        }       
+        charIter++; // move to the next character
 
     }
 
