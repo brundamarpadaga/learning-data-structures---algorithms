@@ -1,5 +1,6 @@
 #include<stdio.h>
 
+ char abc[50] = "this is a string in C.";
 // Function to reverse a string in place
 void reverseString(char* string){
     char *left = string;
@@ -30,7 +31,10 @@ void reverseWords(char* string){
             reverseString(start);
             *charIter = ' '; // put back the space
             start = charIter + 1; // set the start to the next word
-        }       
+        }   
+        else if ( *(charIter + 1) == '\0' ){ // if the next character is null, we are at the end of the string
+            reverseString(start); // reverse the last word
+        }    
         charIter++; // move to the next character
 
     }
