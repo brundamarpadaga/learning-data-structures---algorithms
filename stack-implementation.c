@@ -42,6 +42,11 @@ struct Stack* newStack(int size){
     newStack->ptrPrint = print;
     newStack->popPtr = pop;
     newStack->pushPtr = push;
+    newStack->getSizePtr = getSize;
+    newStack->isEmptyPtr = isEmpty;
+    newStack->isFullPtr = isFull;
+    newStack->peekPtr = peek;
+    newStack->deletePtr = delete;
 
     return newStack;
 }
@@ -58,11 +63,12 @@ void push( Stack_t* stack, int data){
 }
 
 int pop(Stack_t* stack){
-    int topData = *stack->top;
+    
     if ( stack->top == stack->stackArray+(stack->size) ){ // check for stack underflow
         printf("Stack underflow! Cannot pop data from an empty stack \n");
         return -1; // return -1 to indicate stack is empty
     }
+    int topData = *stack->top;
     stack->top++;
     printf("Popped data: %d \n", topData);
     return topData;
@@ -102,14 +108,27 @@ void print(Stack_t* stack){
 
 }
 
+void delete(Stack_t* stack){
+    free(stack->stackArray);
+    free(stack);
+}
+
+
 int main(){
-    Stack_t* s1 = newStack(100);
+    Stack_t* s1 = newStack(10);
 
     s1->pushPtr(s1->self, 5);
     s1->pushPtr(s1->self, 4);
     s1->pushPtr(s1->self, 3);
     s1->pushPtr(s1->self, 2);
     s1->pushPtr(s1->self, 1);
+    s1->pushPtr(s1->self, 5);
+    s1->pushPtr(s1->self, 4);
+    s1->pushPtr(s1->self, 3);
+    s1->pushPtr(s1->self, 2);
+    s1->pushPtr(s1->self, 1);
+    s1->pushPtr(s1->self, 1);
+
 
     s1->ptrPrint(s1->self);
     printf("\n");
@@ -129,6 +148,8 @@ int main(){
 
 
     s1->ptrPrint(s1->self);
+
+    delete(s1);
 
     return 0;
 }
