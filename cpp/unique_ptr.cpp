@@ -28,7 +28,7 @@ int main(){
     if (ptr1) {
         std::cout << "ptr1 is not null" << std::endl;
     } else {
-        std::cout << "ptr1 is null after move" << std::endl; // ptr1 should be null after move
+        std::cout << "ptr1 is null after the move" << std::endl; // ptr1 should be null after move
     }
 
     return 0;
