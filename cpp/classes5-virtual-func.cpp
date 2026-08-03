@@ -6,27 +6,39 @@ class Base{
     public:
     Base(){
         std::cout << "Base constructor called" << std::endl;
+        baseData = new int[5];
     }
-    ~Base(){
+    virtual ~Base(){
         std::cout << "Base destructor called" << std::endl;
+        delete[] baseData;
     }
 
     virtual void display(){ // virtual function allows derived class to override this function
         std::cout << "Base display function called" << std::endl;
     }
+
+
+    private:
+    int* baseData;
 };
 
 class Derived : public Base{
     public:
     Derived(){
         std::cout << "Derived constructor called" << std::endl;
+        derivedData = new int[10];
     }
-    ~Derived(){
+    // virtual destructor ensures that the derived class destructor is called when deleting a base class pointer pointing to a derived class object
+    virtual ~Derived() override  { // override specifier indicates that this function overrides a virtual function in the base class
         std::cout << "Derived destructor called" << std::endl;
+        delete[] derivedData;
     }
     void display() override { // override specifier indicates that this function overrides a virtual function in the base class
         std::cout << "Derived display function called" << std::endl;
     }
+
+    private:
+    int* derivedData;
 };
 
 int main(){
