@@ -30,7 +30,7 @@ int main(){
 
     list_t* reversedList = list_create();
     
-    for(int i = get_size(myList); i >= 0; i--){
+    for(int i = get_size(myList)-1; i >= 0; i--){
         list_get_element(myList, &result);
         list_add_element(reversedList, result);
 
@@ -39,5 +39,6 @@ int main(){
     print_list(reversedList);
 
     list_delete(myList);
+    list_delete(reversedList);
     return 0;
 }

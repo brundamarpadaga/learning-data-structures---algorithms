@@ -30,7 +30,7 @@ bool_t __list_init(list_t* list){
 
 // constructor and destructor
 list_t* list_create(){
-    list_t* list = (list_t*) malloc(sizeof(list_t));
+    list_t* list = (list_t*) malloc(sizeof(list_t)); // allocate memory for the list structure
     if(list == NULL){
         printf("Memory allocation failed\n");
         return NULL;
@@ -81,3 +81,5 @@ void print_list(list_t* list){
 size_t get_size(list_t* list){
     return (list->tail_index+1);
 }
+
+
