@@ -62,7 +62,7 @@ class Array{
         return *this;
     }
 
-    // move constructor
+    // move constructor - transfers ownership of resources from a temporary object to a new object, avoiding deep copy and improving performance    
     Array(Array &&rhs) noexcept {
         if(this != &rhs){
             size = rhs.size;
