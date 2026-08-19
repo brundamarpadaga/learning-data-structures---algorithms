@@ -1,3 +1,11 @@
+/*
+ * File: main.c
+ * 
+ * Code taken from "Extreme C" by Kamran Amini, Chapter 5: Inheritance in C
+ * 
+ */
+
+
 #include<stdio.h>
 #include"student.h"
 
