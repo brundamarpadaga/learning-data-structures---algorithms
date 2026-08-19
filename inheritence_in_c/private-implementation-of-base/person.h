@@ -3,7 +3,7 @@
 
 #include "person_p.h"
 
-typedef struct person_t;
+typedef struct person_t person_t;
 
 person_t* newPerson();
 void person_ctor(person_t* person, char* firstName, char* lastName, int age);
