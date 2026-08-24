@@ -2,7 +2,7 @@
 #include <iostream>
 #include <thread>
 
-void worker(int *val) {
+void worker(std::shared_ptr<int> val) {
     std::this_thread::sleep_for(std::chrono::seconds(1));
     std::cout << "worker sees: " << *val << '\n';
 }
@@ -14,15 +14,16 @@ void worker(int *val) {
 // leading to undefined behavior. A better approach would be to use smart pointers (like std::shared_ptr) to manage the lifetime of the object automatically.
 void spawn_task(void) {
     int value = 42;  // lives on spawn_task's stack frame
-    int *ptr = new int(value); // allocate on heap to avoid dangling pointer              
+    //int *ptr = new int(value); // allocate on heap to avoid dangling pointer 
+    std::shared_ptr<int> ptr = std::make_shared<int>(value); // use shared_ptr to manage the lifetime of the object             
     std::thread t(worker, ptr); // passing &value "outward"
     if (t.joinable()) {
         t.join(); // wait for the thread to finish before deleting the pointer
     }
-    delete ptr;                    // clean up the allocated memory
+    // delete ptr;                    // clean up the allocated memory
 
 
-    t.detach();                    // spawn_task returns immediately
+    //t.detach();                    // spawn_task returns immediately
 }                                  // value's stack frame is now gone
 
 int main(void) {
