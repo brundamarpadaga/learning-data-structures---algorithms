@@ -2,18 +2,20 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-// memory allocator
+typedef struct person_t {
+    char* firstName;
+    char* lastName;
+    int age;
+} person_t;
+
 person_t* newPerson(){
     return (person_t*)malloc(sizeof(person_t));
 }
-
-// constructor
 void person_ctor(person_t* person, char* firstName, char* lastName, int age){
     person->firstName = firstName;
     person->lastName = lastName;
     person->age = age;
 }
-// destructor
 void person_dtor(person_t* person){
     // do nothing;
 }
