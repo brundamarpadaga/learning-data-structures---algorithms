@@ -4,8 +4,14 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
+#include <atomic>
+
 int counter = 0;
 std::mutex mtx; // create a mutex to protect the shared counter
+
+std::atomic<int> atomic_counter(0); // create an atomic counter to protect the shared counter
+
+
 
 void increment(){
     for(int i = 0; i < 1000000; ++i){
@@ -23,6 +29,20 @@ void decrement(){
     }
 }
 
+void increment_a(){
+    for(int i = 0; i < 1000000; ++i){
+        ++atomic_counter; // increment the shared atomic counter variable
+        // No need for explicit locking with std::atomic
+    }
+}
+
+void decrement_a(){
+    for(int i = 0; i < 1000000; ++i){
+        --atomic_counter; // decrement the shared atomic counter variable
+        // No need for explicit locking with std::atomic
+    }
+}
+
 
 int main(){
     // create two threads that increment a shared counter
@@ -32,12 +52,19 @@ int main(){
     std::thread thread1(increment);
     std::thread thread2(decrement);
 
+    std::thread thread3(increment_a);
+    std::thread thread4(decrement_a);
+
     // wait for both threads to finish
     thread1.join();
     thread2.join();
 
+    thread3.join();
+    thread4.join();
+
     // print the final value of the counter
     std::cout << "Final counter value: " << counter << std::endl;
+    std::cout << "Final atomic counter value: " << atomic_counter.load() << std::endl;
 
 
 
