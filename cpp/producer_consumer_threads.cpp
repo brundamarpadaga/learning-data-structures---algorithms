@@ -19,7 +19,8 @@ Teaches std::shared_mutex (C++17) and the tradeoff between read throughput and w
 std::mutex mtx;
 std::queue<int> queue1;
 std::condition_variable queue_not_full;
-std::condition_variable queue_full;
+std::condition_variable queue_not_empty;
+bool producer_done = false;
 
 void producer(){
 
@@ -46,9 +47,11 @@ void producer(){
         queue1.push(random_num);
         lck.unlock();
 
-        queue_full.notify_one(); // notify the consumer that there is an item in the queue
+        queue_not_empty.notify_one(); // notify the consumer that there is an item in the queue
         std::this_thread::sleep_for(std::chrono::milliseconds(100)); 
     }
+
+    producer_done = true;
 
 
 
@@ -56,9 +59,12 @@ void producer(){
 
 void consumer(){
 
-    for(int i = 0; i < 20; i++){
+    for(int i = 0; i < 50; i++){
+        if(producer_done && queue1.empty()){
+            break; // exit the loop if producer is done and queue is empty
+        }
         std::unique_lock<std::mutex> lck(mtx);
-        queue_full.wait(lck, []{return !queue1.empty(); }); // wake when queue is not empty
+        queue_not_empty.wait(lck, []{return !queue1.empty(); }); // wake when queue is not empty
 
         std::cout << "Consumer side: " << queue1.front() << std::endl;
         queue1.pop();
@@ -67,8 +73,6 @@ void consumer(){
         queue_not_full.notify_one(); // notify the producer that there is space in the queue
         std::this_thread::sleep_for(std::chrono::milliseconds(150)); 
     }
-
-
 }
 
 
@@ -76,8 +80,6 @@ int main(){
 
     std::thread consumer_t(consumer);
     std::thread producer_t(producer);
-
-    std::this_thread::sleep_for(std::chrono::seconds(5));
 
     consumer_t.join();
     producer_t.join();
