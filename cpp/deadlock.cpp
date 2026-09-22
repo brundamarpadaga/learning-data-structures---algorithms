@@ -58,14 +58,15 @@ class Account{
 
 
 void transfer(Account& account1, Account& account2, int amount){
-    std::unique_lock<std::mutex> lock1(account1.mtx);  // lock both accounts 
-    std::this_thread::sleep_for(std::chrono::milliseconds(10)); // force interleaving
-    std::unique_lock<std::mutex> lock2(account2.mtx);
+    //std::unique_lock<std::mutex> lock1(account1.mtx);  // lock both accounts 
+    //std::this_thread::sleep_for(std::chrono::milliseconds(10)); // force interleaving
+    //std::unique_lock<std::mutex> lock2(account2.mtx);
+    std::scoped_lock lock1( account1.mtx, account2.mtx); // lock both accounts atomically to avoid deadlock
     account1.withdraw(amount);
     account2.deposit(amount);
     
-    lock1.unlock();
-    lock2.unlock();
+    //lock1.unlock();
+    //lock2.unlock();
     std::cout << "Transferred " << amount << " from account " << account1.get_name() << " to account " << account2.get_name()  << std::endl;
 
 }
