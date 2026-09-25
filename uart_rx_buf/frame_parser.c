@@ -59,7 +59,6 @@ bool parser_feed(frame_parser_t *p, uint8_t byte){
         else {
             p->state = STATE_WAIT_SYNC; // reset to wait for SYNC
             printf("Checksum mismatch, resetting parser to wait for SYNC\n");
-            p->state = STATE_WAIT_SYNC; // reset to wait for SYNC
             return false;
         }
         
