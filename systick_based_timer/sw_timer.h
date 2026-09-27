@@ -2,16 +2,17 @@
 #define SW_TIMER_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define MAX_TIMERS  8
 
 typedef void (*timer_cb_t)(void);
 
 typedef struct {
-    uint32_t   start_tick;
-    uint32_t   period_ms;
-    bool       active;
-    timer_cb_t cb;
+    uint32_t   start_tick; // tick count when timer was started
+    uint32_t   period_ms; // timer period in milliseconds
+    bool       active; // true if timer is active
+    timer_cb_t cb; // callback function to call when timer expires
 } sw_timer_t;
 
 
