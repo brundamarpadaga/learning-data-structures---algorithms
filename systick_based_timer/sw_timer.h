@@ -15,6 +15,7 @@ typedef struct {
     timer_cb_t cb; // callback function to call when timer expires
     bool periodic; // true if timer is periodic
     char* name; // optional name for the timer
+    uint32_t index; // current timer allocated, starts from 0
 } sw_timer_t;
 
 
@@ -35,5 +36,15 @@ void timer_start(sw_timer_t *t, char* name, uint32_t period_ms, timer_cb_t cb, b
 
 // Call from main loop — fires callback if timer has expired
 void timer_poll(sw_timer_t *t);
+
+// Allocates a timer slot from the pool, returns NULL if full
+sw_timer_t* timer_alloc(void);
+
+// Returns a timer slot back to the pool
+void timer_free(sw_timer_t *t);
+
+// Polls all active timers in the pool — call once per main loop iteration
+void poll_all(void);
+
 
 #endif // SW_TIMER_H

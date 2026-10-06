@@ -3,6 +3,10 @@
 #include<stdio.h>
 #include<unistd.h> // for sleep function
 
+//new feature : poll_all_timers() function to poll all timers in an array
+
+sw_timer_t timers[MAX_TIMERS];
+
 volatile uint32_t tick_count = 0; // global tick count
 
 // Simulated ISR — call this in a loop to simulate 1ms ticks
@@ -40,6 +44,18 @@ void timer_start(sw_timer_t *t,char* name, uint32_t period_ms, timer_cb_t cb, bo
     printf("Timer started \n");
 }
 
+// Allocates a timer slot from the pool, returns NULL if full
+sw_timer_t* timer_alloc(void){
+    
+}
+
+// Returns a timer slot back to the pool
+void timer_free(sw_timer_t *t);
+
+// Polls all active timers in the pool — call once per main loop iteration
+void poll_all(void);
+
+
 // Call from main loop — fires callback if timer has expired
 void timer_poll(sw_timer_t *t){
     if(elapsed_ms(t->start_tick) >= t->period_ms && t->active){
@@ -58,10 +74,12 @@ void print(char *name){
 }
 
 int main(){
-    sw_timer_t timer1;
-    sw_timer_t timer2;
-    timer_start(&timer1, "timer1",10, print, true);
-    timer_start(&timer2, "timer2", 5, print, true);
+    
+    sw_timer_t* timer1 = timer_alloc();
+    sw_timer_t* timer2;
+
+    timer_start(&timers[0], "timer1",10, print, true);
+    timer_start(&timers[1], "timer2", 5, print, true);
     while(1){
         sleep(1); // sleep for 1 second
         systick_isr();
