@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define MAX_TIMERS  8
+#define MAX_TIMERS  4
 
 typedef void (*timer_cb_t)(char* name); // callback function type
 
@@ -45,6 +45,12 @@ void timer_free(sw_timer_t *t);
 
 // Polls all active timers in the pool — call once per main loop iteration
 void poll_all(void);
+
+// prints the current timer pool
+void print_timer_pool();
+
+// Checks if a timer is part of the pool
+bool timer_is_part_of_pool(sw_timer_t *t);
 
 
 #endif // SW_TIMER_H
