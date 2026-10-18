@@ -5,6 +5,7 @@
 
 //new feature : poll_all_timers() function to poll all timers in an array
 
+
 sw_timer_t timers[MAX_TIMERS];
 uint8_t timer_index = 0;
 

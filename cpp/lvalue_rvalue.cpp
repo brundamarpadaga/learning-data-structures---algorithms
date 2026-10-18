@@ -1,7 +1,7 @@
 #include <iostream>
 #include <utility> // for std::move
 
-void print(int& x) {
+void print(int& x) { // takes lvalue reference, can only bind to lvalues
     std::cout << "Lvalue reference: " << x << std::endl;
 }
 
@@ -33,11 +33,12 @@ int& returnLvalue(){
 // In C++, an lvalue (left value) is an expression that refers to a memory location and can appear on the left side of an assignment.
 // An rvalue (right value) is an expression that does not refer to a memory location and can only appear on the right side of an assignment.
 int main() {
-    int a = 10; // 'a' is an lvalue
+    int a = 10; // 'a' is an lvalue since it has a memory address and can be assigned a value
+    20; // '20' is an rvalue since it does not have a memory address and cannot be assigned a value
     print(a);   // Calls the lvalue reference version
 
     print(20);  // Calls the rvalue reference version, generates a temporary rvalue with the value 20 
-                // Calls the const lvalue reference version, since it can bind to rvalues
+                // Calls the const lvalue reference version, since it can bind to rvalues ; 
     print(std::move(a)); // std::move converts 'a' to an rvalue, calls the rvalue reference version
                         // This allows the value to be moved rather than copied, which can be more efficient
     print(returnRvalue()); // Calls the rvalue reference version, returnRvalue() returns an rvalue
