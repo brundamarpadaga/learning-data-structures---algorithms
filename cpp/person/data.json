@@ -1,0 +1,35 @@
+[
+  {
+    "name": {
+      "first": "John",
+      "last": "Doe"
+    },
+    "identity": {
+      "ssn": "123-45-6789"
+    },
+    "contacts": [
+      {"type": "mobile", "number": "555-111-2222"},
+      {"type": "home",   "number": "555-333-4444"}
+    ]
+  },
+  {
+    "name": {
+      "first": "Jane",
+      "last": "Smith"
+    },
+    "identity": {
+      "ssn": "987-65-4321"
+    },
+    "contacts": [
+      {"type": "home",   "number": "555-777-8888"},
+      {"type": "mobile", "number": "555-999-0000"}
+    ]
+  },
+  {
+    "name": {
+      "first": "Bob",
+      "last": "Johnson"
+    },
+    "identity": {}
+  }
+]
