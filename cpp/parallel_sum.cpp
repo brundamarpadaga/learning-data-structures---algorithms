@@ -16,6 +16,7 @@ add them together in main
 #include <iostream>
 #include <vector>
 #include <future>
+#include <cassert>
 
 int sum_chunk(const std::vector<int>& data, size_t start, size_t end) {
     
@@ -29,19 +30,29 @@ int sum_chunk(const std::vector<int>& data, size_t start, size_t end) {
 
 int main(){
 
-    const int data_size = 1000000;
+    const int data_size = 1000000; // 
     std::vector<int> vec(data_size, 1);
 
-    int chunk = data_size / 4;
+    int num_threads = 4;
+    int chunk = data_size / num_threads; //  250,000
 
-    std::future<int> f1 = std::async(std::launch::async, sum_chunk, std::ref(vec), 0, chunk);
-    std::future<int> f2 = std::async(std::launch::async, sum_chunk, std::ref(vec), chunk, 2*chunk);
-    std::future<int> f3 = std::async(std::launch::async, sum_chunk, std::ref(vec), 2*chunk, 3*chunk);
-    std::future<int> f4 = std::async(std::launch::async, sum_chunk, std::ref(vec), 3*chunk, 4*chunk);
+    std::vector<std::future<int>> funcs (num_threads);
 
+    std::cout << "here " << std::endl;
+    for(int i = 0; i < num_threads; i++){
+        size_t start = i * chunk; // 0 250000 500,000 750,000
+        size_t end = start + chunk; // 250,000 500,000 750,000 1,000,000
+        std::cout << "start = " << start << " end = " << end << std::endl;
+        funcs[i] = std::async(std::launch::async, sum_chunk, std::ref(vec), start, end);
+    }
     // all threads are running simultaneously now
 
-    int total =  f1.get() + f2.get() + f3.get() + f4.get() ;
+    int total =  0;
+    for( int i = 0; i < num_threads; i++ ){
+        total += funcs[i].get();
+    }
+
+    assert(total == data_size); // verify the result is correct
     
     std::cout << "Total = " << total << std::endl;
 }
