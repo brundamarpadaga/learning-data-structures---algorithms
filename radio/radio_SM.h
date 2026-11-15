@@ -16,7 +16,7 @@ typedef struct {
 } radio_t;
 
 bool radio_transition(radio_t *r, radio_state_t new_state);
-void radio_tick(radio_t *r);   // call each ms — handles RX timeout
+bool radio_tick(radio_t *r);   // call each ms — handles RX timeout
 const char* radio_state_name(radio_state_t s);
 
 

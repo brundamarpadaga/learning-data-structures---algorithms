@@ -21,7 +21,8 @@ That's exactly how a real protocol frame would look.
 
 #include <stdint.h>
 #include <stdio.h>
-#include<stdlib.h>
+#include<time.h>
+
 
 uint16_t crc16_bitwise(const uint8_t * data, size_t len){
 
@@ -86,11 +87,25 @@ int main(){
     size_t size = 9;
     
     uint8_t data[] = "123456789";
+    // measure time taken by bitwise implementation
+    time_t start = clock();
     printf("crc = %x \n ", crc16_bitwise( data, size));
+    time_t end = clock();
+    double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Time taken by bitwise implementation: %f seconds\n", time_taken);
+
 
     uint16_t table[256] = {0};
     crc16_table_init(table);
-    printf("%x \n", table[data[2]]);
-    printf("crc = %x \n ", crc16_fast(table, data, size));
 
+    
+    time_t start2 = clock();
+    printf("crc = %x \n ", crc16_fast(table, data, size));
+    time_t end2 = clock();
+    double time_taken2 = (double)(end2 - start2) / CLOCKS_PER_SEC;
+    printf("Time taken by table-driven implementation: %f seconds\n", time_taken2);
+
+
+    float speed_up = time_taken / time_taken2;
+    printf("Speed up: %f times \n", speed_up);
 }
