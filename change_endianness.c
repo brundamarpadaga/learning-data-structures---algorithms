@@ -2,7 +2,7 @@
 #include<stdint.h>
 #include<string.h>
 #include <assert.h>
-
+#include <stdbool.h>
 /*15-minute step (change_endianness.c): remove the pointer cast. 
 The line printf(\"0x%02x \", *(uint32_t*)bytes); reads a uint8_t array through a uint32_t pointer,
  which is undefined behaviour (strict aliasing/alignment).
@@ -34,6 +34,17 @@ uint32_t swap32(uint32_t num){
 
 }
 
+// Return 1 if the machine is little-endian, 0 if big-endian.
+// Hint: store a known value and inspect its first byte.
+bool is_little_endian(void){
+
+    uint32_t abc = 0x12345678;
+    uint8_t* bytes = (uint8_t*)&abc;
+    
+    memcpy(bytes,&abc, 4);
+    return bytes[0] == 0x78;
+}
+
 int main(){
 
 
@@ -41,6 +52,11 @@ int main(){
 
     printf("0x%08x ", swap32(num));
     assert(swap32(0xFFFF0FFF) == 0xFF0FFFFF);
+    assert(swap32(0x12345678) == 0x78563412);
+
+
+    bool little_endian = is_little_endian();
+    printf("Machine is %s-endian\n", little_endian ? "little" : "big");
 
     return 0;
 
