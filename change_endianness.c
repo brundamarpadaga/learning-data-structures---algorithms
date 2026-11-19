@@ -44,6 +44,27 @@ bool is_little_endian(void){
     memcpy(bytes,&abc, 4);
     return bytes[0] == 0x78;
 }
+// No library functions. No loops required (but allowed).
+// 0xDEADBEEF → 0xEFBEADDE
+uint32_t byte_swap32_nl(uint32_t x){
+
+    uint32_t result;
+    uint8_t out[4];
+
+    out[3] = x & 0xFF;
+    out[2] = (x >> 8) & 0xFF;
+    out[1] = (x >> 16) & 0xFF;
+    out[0] =  (x >> 24) & 0xFF;
+    printf( " %08x \n", *(uint32_t*)out);
+
+    memcpy(&result, out, 4);
+
+    return result;
+
+
+    
+
+}
 
 int main(){
 
@@ -53,6 +74,7 @@ int main(){
     printf("0x%08x ", swap32(num));
     assert(swap32(0xFFFF0FFF) == 0xFF0FFFFF);
     assert(swap32(0x12345678) == 0x78563412);
+    assert(byte_swap32_nl(0x12345678) == 0x78563412);
 
 
     bool little_endian = is_little_endian();
