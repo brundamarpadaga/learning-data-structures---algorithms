@@ -1,6 +1,8 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
+#include<stdbool.h>
+
 typedef struct Node{
     int data;
     struct Node* next;
@@ -18,6 +20,7 @@ void insertAtTail( LinkedList_t* list, int data);
 void deleteList(LinkedList_t* list);
 void deleteNodeAtHead(LinkedList_t* list);
 void reverseLinkedList(LinkedList_t* );
+bool cycleDetection(LinkedList_t* );
 
 
 #endif // LINKEDLIST_H

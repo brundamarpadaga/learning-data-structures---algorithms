@@ -17,6 +17,9 @@ int main(){
     printLinkedList(list);
     deleteNodeAtHead(list);
     printLinkedList(list);
+
+    list->head->next->next->next = list->head;
+    printf("%s \n", cycleDetection(list)? "it is a cyclic list" : "it is not a cyclic list");
     
     deleteList(list);
 
@@ -69,7 +72,7 @@ void insertAtTail( LinkedList_t* list, int data){
 void deleteList(LinkedList_t* list){
     Node_t* current = list->head;
     while(current!=NULL){
-        Node_t*temp = current;
+        Node_t* temp = current;
         current = current->next;
         free(temp);
     }
@@ -94,4 +97,24 @@ void reverseLinkedList(LinkedList_t* list){
         current = next;
         
     }  
+}
+
+bool cycleDetection(LinkedList_t* list){
+
+    if( list == NULL || list->head == NULL){
+        return false;
+    }
+    Node_t* temp = list->head;
+    Node_t* temp2 = list->head;
+
+    while( temp != NULL && temp2 != NULL && temp2->next != NULL){
+        temp2 = temp2->next->next;
+        if ( temp == temp2){
+            return true;
+        }
+        temp = temp->next;
+        
+
+    }
+    return false;
 }
